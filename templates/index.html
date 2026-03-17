@@ -1,12 +1,12 @@
 {% include "header.html" %}
 
 		<div class="container-sm">
-			<div class="mt-4">
+			<div class="mt-4 mb-4">
 				<h5><i class="bi bi-speedometer2 me-2"></i>Dashboard</h5>
 			</div>
 
-			<div class="row mt-4">
-				<div class="col-md-4">
+			<div class="row">
+				<div class="col-md-4 mb-4">
 					<div class="card rounded-3">
 						<div class="card-header">
 							<h6 class="mb-0">DreamPi Service Status</h6>
@@ -16,7 +16,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4 mb-4">
 					<div class="card rounded-3">
 						<div class="card-header">
 							<h6 class="mb-0">Dreamcast Now</h6>
@@ -26,7 +26,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-4 mb-4">
 					<div class="card rounded-3">
 						<div class="card-header">
 							<h6 class="mb-0">IP Address</h6>
@@ -37,8 +37,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="row mt-4">
-				<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-6 mb-4">
 					<div class="card rounded-3">
 						<div class="card-header">
 							<h6 class="mb-0">Online Users</h6>
@@ -48,28 +48,7 @@
 						</div>
 					</div>
 				</div>
-
-			<!--<form method="POST" action="/run">
-				<div class="mb-3">
-					<label for="action" class="form-label">Action</label>
-					<select class="form-select" id="action" name="action" required>
-						<option value="">Select…</option>
-						<option value="status">Check status</option>
-						<option value="restart">Restart service</option>
-			  		</select>
-				</div>
-
-				<button type="submit" class="btn btn-primary">Run</button>
-			</form>
-
-			{% if result %}
-			<div class="mt-4">
-				<h5>Result</h5>
-				<pre class="bg-light p-3">{{ result }}</pre>
 			</div>
-			{% endif %}-->
 		</div>
-
-	</div>
 
 {% include "footer.html" %}

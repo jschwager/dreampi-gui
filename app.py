@@ -16,7 +16,7 @@ def index():
 		# Mac test:
 		#command = subprocess.run(["echo", "active"], capture_output=True, text=True, check=True, timeout=10)
 		# On Raspberry Pi use:
-		command = subprocess.run(["sudo", "systemctl", "is-active", "dreampi.service"], capture_output=True, text=True, check=True, timeout=10)
+		command = subprocess.run(["sudo", "systemctl", "is-active", "dreampi.service"], capture_output=True, text=True, check=True, timeout=5)
 		status = command.stdout.strip().capitalize()
 		status = f"<span class=\"badge rounded-pill text-bg-success p-2\">{status}</span>"
 	except subprocess.CalledProcessError as e:
@@ -69,4 +69,4 @@ def run():
 
 if __name__ == "__main__":
 	from waitress import serve
-	serve(app, host="0.0.0.0", port=80)
+	serve(app, host="0.0.0.0", port=8080)
