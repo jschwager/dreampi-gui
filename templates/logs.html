@@ -1,0 +1,18 @@
+{% include "header.html" %}
+
+		<div class="container-sm">
+		  {% if logs %}
+		  <div class="mt-4">
+			<h5>Logs</h5>
+			<pre class="bg-light p-3">{{ logs }}</pre>
+		  </div>
+		  {% endif %}
+
+		  {% if error %}
+		  <div class="mt-4 alert alert-danger">{{ error }}</div>
+		  {% endif %}
+		</div>
+		  
+	</div>
+
+{% include "footer.html" %}

@@ -12,6 +12,16 @@ COMMANDS = {
 def index():
 	return render_template("index.html")
 
+@app.route("/logs")
+def logs():
+	try:
+		completed = subprocess.run(["sudo", "journalctl", "-u", "dreampi.service", "-n", "100", "--no-pager"], capture_output=True, text=True, check=True)
+		logs = completed.stdout
+	except subprocess.CalledProcessError as e:
+		logs = e.stderr or str(e)
+
+	return render_template("logs.html", logs=logs)
+
 @app.route("/run", methods=["POST"])
 def run():
 	action = request.form.get("action", "")
