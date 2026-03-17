@@ -1,25 +1,73 @@
 {% include "header.html" %}
 
 		<div class="container-sm">
-		  <form method="POST" action="/run">
-			<div class="mb-3">
-			  <label for="action" class="form-label">Action</label>
-			  <select class="form-select" id="action" name="action" required>
-				<option value="">Select…</option>
-				<option value="status">Check status</option>
-				<option value="restart">Restart service</option>
-			  </select>
+			<div class="mt-4">
+				<h5><i class="bi bi-speedometer2 me-2"></i>Dashboard</h5>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Run</button>
-		  </form>
+			<div class="row mt-4">
+				<div class="col-md-4">
+					<div class="card rounded-3">
+						<div class="card-header">
+							<h6 class="mb-0">DreamPi Service Status</h6>
+						</div>
+						<div class="card-body">
+    						{{ status | safe }}
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card rounded-3">
+						<div class="card-header">
+							<h6 class="mb-0">Dreamcast Now</h6>
+						</div>
+						<div class="card-body">
+        					<span class="badge rounded-pill text-bg-success p-2">Enabled</span><!-- Placeholder for actual status -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card rounded-3">
+						<div class="card-header">
+							<h6 class="mb-0">IP Address</h6>
+						</div>
+						<div class="card-body">
+        					{{ ip_address }}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-md-6">
+					<div class="card rounded-3">
+						<div class="card-header">
+							<h6 class="mb-0">Online Users</h6>
+						</div>
+						<div class="card-body">
+        					<!-- Placeholder for actual online users -->
+						</div>
+					</div>
+				</div>
 
-		  {% if result %}
-		  <div class="mt-4">
-			<h5>Result</h5>
-			<pre class="bg-light p-3">{{ result }}</pre>
-		  </div>
-		  {% endif %}
+			<!--<form method="POST" action="/run">
+				<div class="mb-3">
+					<label for="action" class="form-label">Action</label>
+					<select class="form-select" id="action" name="action" required>
+						<option value="">Select…</option>
+						<option value="status">Check status</option>
+						<option value="restart">Restart service</option>
+			  		</select>
+				</div>
+
+				<button type="submit" class="btn btn-primary">Run</button>
+			</form>
+
+			{% if result %}
+			<div class="mt-4">
+				<h5>Result</h5>
+				<pre class="bg-light p-3">{{ result }}</pre>
+			</div>
+			{% endif %}-->
 		</div>
 
 	</div>
