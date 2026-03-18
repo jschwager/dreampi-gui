@@ -37,8 +37,15 @@ def index():
 	
 	# Dreamcast IP address
 	try:
-		dc_ip_address_command = subprocess.run(["sudo", "journalctl", "-u", "dreampi.service", "|", "grep", "\"Created alias interface\"", "|", "grep", "-oE", "\"[0-9]+\\.[0-9]+\\.[0-9]+\\.(98|99)\"", "|", "tail", "-n", "1"], capture_output=True, text=True, check=True, timeout=5)
-		dc_ip_address = dc_ip_address_command.stdout.strip().split()[0]  # Get the first IP address
+		dc_ip_address_command = subprocess.run(
+			"sudo journalctl -u dreampi.service | grep 'Created alias interface' | grep -oE '[0-9]+\\.[0-9]+\\.[0-9]+\\.(98|99)' | tail -n 1",
+			capture_output=True,
+			text=True,
+			check=True,
+			timeout=5,
+			shell=True
+		)
+		dc_ip_address = dc_ip_address_command.stdout.strip()
 	except subprocess.CalledProcessError as e:
 		dc_ip_address = "Error"
 	except subprocess.TimeoutExpired as e:
