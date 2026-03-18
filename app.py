@@ -20,21 +20,41 @@ def index():
 		status = command.stdout.strip().capitalize()
 		status = f"<span class=\"badge rounded-pill text-bg-success p-2\">{status}</span>"
 	except subprocess.CalledProcessError as e:
-		status = f"<span class=\"badge rounded-pill text-bg-danger p-2\">Error</span>"
+		status = f"<span class=\"badge rounded-pill text-bg-danger p-2\">Error / Inactive</span>"
 	except subprocess.TimeoutExpired as e:
 		status = f"<span class=\"badge rounded-pill text-bg-warning p-2\">Unknown (timeout)</span>"
 	
 	# IP address
 	try:
-		command = subprocess.run(["hostname", "-I"], capture_output=True, text=True, check=True, timeout=10)
-		ip_address = command.stdout.strip().split()[0]  # Get the first IP address
+		ip_address_command = subprocess.run(["hostname", "-I"], capture_output=True, text=True, check=True, timeout=5)
+		ip_address = ip_address_command.stdout.strip().split()[0]  # Get the first IP address
+		dc_ip_address_command = subprocess.run(["sudo", "journalctl", "-u", "dreampi.service", "|", "grep", "\"Created alias interface\"", "|", "grep", "-oE", "\"[0-9]+\\.[0-9]+\\.[0-9]+\\.(98|99)\"", "|", "tail", "-n", "1"], capture_output=True, text=True, check=True, timeout=5)
+		dc_ip_address = dc_ip_address_command.stdout.strip().split()[0]  # Get the first IP address
 	except subprocess.CalledProcessError as e:
 		ip_address = "Error"
+		dc_ip_address = "Error"
 	except subprocess.TimeoutExpired as e:
 		ip_address = "Unknown (timeout)"
+		dc_ip_address = "Unknown (timeout)"
 
-	return render_template("index.html", status=status, ip_address=ip_address)
+	# System Overview
+	try:
+		# Mac test:
+		hostname_command = subprocess.run(["echo", "dreampi.local"], capture_output=True, text=True, check=True, timeout=5)
+		#hostname_command = subprocess.run(["hostname"], capture_output=True, text=True, check=True, timeout=5)
+		hostname = hostname_command.stdout.strip()
+		# Mac test:
+		uptime_command = subprocess.run(["echo", "up 3 days, 6 hours, 43 minutes"], capture_output=True, text=True, check=True, timeout=5)
+		#uptime_command = subprocess.run(["uptime", "-p"], capture_output=True, text=True, check=True, timeout=5)
+		uptime = uptime_command.stdout.strip()
+	except subprocess.CalledProcessError as e:
+		hostname = "Error"
+		uptime = "Error"
+	except subprocess.TimeoutExpired as e:
+		hostname = "Unknown (timeout)"
+		uptime = "Unknown (timeout)"
 
+	return render_template("index.html", status=status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime)
 
 @app.route("/configure")
 def configure():
