@@ -19,21 +19,21 @@
 				<div class="col-md-4 mb-4">
 					<div class="card rounded-3 h-100">
 						<div class="card-header">
-							<h6 class="mb-0">Modem Status</h6>
+							<h6 class="mb-0">IP Addresses</h6>
 						</div>
-						<div class="card-body">
-    						{{ modem_name | safe }}
+						<div class="card-body small">
+							<strong>DreamPi:</strong> {{ ip_address }}<br>
+							<strong>Dreamcast:</strong> {{ dc_ip_address }}
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4 mb-4">
 					<div class="card rounded-3 h-100">
 						<div class="card-header">
-							<h6 class="mb-0">IP Addresses</h6>
+							<h6 class="mb-0">Modem Detected</h6>
 						</div>
 						<div class="card-body small">
-							<strong>DreamPi:</strong> {{ ip_address }}<br>
-							<strong>Dreamcast:</strong> {{ dc_ip_address }}
+    						{{ modem_name | safe }}
 						</div>
 					</div>
 				</div>
@@ -52,6 +52,23 @@
 							<div class="d-flex gap-2">
 								<button class="btn btn-sm btn-warning">Restart Service</button>
 								<button class="btn btn-sm btn-danger">Stop Service</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 mb-4">
+					<div class="card rounded-3 h-100">
+						<div class="card-header">
+							<h6 class="mb-0">Websites</h6>
+						</div>
+						<div class="card-body">
+							<div class="mb-3">
+								<ul>
+									<li><strong>Online Users:</strong> <a href="https://dreamcast.online/now/" target="_blank">Dreamcast Now</a></li>
+									<li><strong>Forums:</strong> <a href="https://www.dreamcast-talk.com/" target="_blank">Dreamcast Talk</a></li>
+									<li><strong>Social Media:</strong> <a href="https://www.reddit.com/r/dreamcast/" target="_blank">Reddit r/dreamcast</a></li>
+									<li><strong>Discord:</strong> <a href="https://segaonline.net" target="_blank">Sega Online</a></li>
+								</ul>
 							</div>
 						</div>
 					</div>
