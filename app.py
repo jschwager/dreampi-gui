@@ -70,8 +70,23 @@ def index():
 		uptime = "Error"
 	except subprocess.TimeoutExpired as e:
 		uptime = "Unknown (timeout)"
+	
+	# Modem detection
+	try:
+		modem_command = subprocess.run(
+			"lsusb | grep 'Modem' | awk -F' ID [0-9a-fA-F]*:[0-9a-fA-F]* ' '{print $2}'",
+			capture_output=True,
+			text=True,
+			shell=True,
+			timeout=5
+		)
+		modem_name = modem_command.stdout.strip()
+	except subprocess.CalledProcessError as e:
+		modem_name = "Error / Not Detected"
+	except subprocess.TimeoutExpired as e:
+		modem_name = "Unknown (timeout)"
 
-	return render_template("index.html", status=status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime)
+	return render_template("index.html", status=status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
 
 @app.route("/configure")
 def configure():
