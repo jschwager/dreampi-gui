@@ -74,7 +74,7 @@ def index():
 	# Modem detection
 	try:
 		modem_command = subprocess.run(
-			"lsusb | grep 'Modem' | awk -F' ID [0-9a-fA-F]*:[0-9a-fA-F]* ' '{print $2}'",
+			"lsusb | grep -E '(Modem|Conexant)' | awk -F' ID [0-9a-fA-F]*:[0-9a-fA-F]* ' '{print $2}'",
 			capture_output=True,
 			text=True,
 			shell=True,
