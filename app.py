@@ -8,21 +8,27 @@ COMMANDS = {
 	"status": ["sudo", "systemctl", "status", "dreampi.service"]
 }
 
+# FUNCTION: Status styling helper
+def style_helper(color, status):
+	if color == "green":
+		return f"<i class=\"bi bi-check-circle-fill\" style=\"color: green;\"></i> {status}"
+	elif color == "red":
+		return f"<i class=\"bi bi-dash-circle-fill\" style=\"color: red;\"></i> {status}"
+	elif color == "yellow":
+		return f"<i class=\"bi bi-exclamation-circle-fill\" style=\"color: orange;\"></i> {status}"
+
 @app.route("/")
 def index():
 
 	# Service status
 	try:
-		# Mac test:
-		#command = subprocess.run(["echo", "active"], capture_output=True, text=True, check=True, timeout=10)
-		# On Raspberry Pi use:
 		command = subprocess.run(["sudo", "systemctl", "is-active", "dreampi.service"], capture_output=True, text=True, check=True, timeout=5)
-		status = command.stdout.strip().capitalize()
-		status = f"<span class=\"badge rounded-pill text-bg-success p-2\">{status}</span>"
+		service_status = command.stdout.strip().capitalize()
+		service_status = style_helper("green", service_status)
 	except subprocess.CalledProcessError as e:
-		status = f"<span class=\"badge rounded-pill text-bg-danger p-2\">Error / Inactive</span>"
+		service_status = style_helper("red", "Error / Inactive")
 	except subprocess.TimeoutExpired as e:
-		status = f"<span class=\"badge rounded-pill text-bg-warning p-2\">Unknown (timeout)</span>"
+		service_status = style_helper("yellow", "Unknown (timeout)")
 	
 	# IP Address
 
@@ -31,9 +37,9 @@ def index():
 		ip_address_command = subprocess.run(["hostname", "-I"], capture_output=True, text=True, check=True, timeout=5)
 		ip_address = ip_address_command.stdout.strip().split()[0]  # Get the first IP address
 	except subprocess.CalledProcessError as e:
-		ip_address = "Error"
+		ip_address = style_helper("red", "Error")
 	except subprocess.TimeoutExpired as e:
-		ip_address = "Unknown (timeout)"
+		ip_address = style_helper("yellow", "Unknown (timeout)")
 	
 	# Dreamcast IP address
 	try:
@@ -47,9 +53,9 @@ def index():
 		)
 		dc_ip_address = dc_ip_address_command.stdout.strip()
 	except subprocess.CalledProcessError as e:
-		dc_ip_address = "Error"
+		dc_ip_address = style_helper("red", "Error")
 	except subprocess.TimeoutExpired as e:
-		dc_ip_address = "Unknown (timeout)"
+		dc_ip_address = style_helper("yellow", "Unknown (timeout)")
 
 	# System Overview
 
@@ -58,18 +64,18 @@ def index():
 		hostname_command = subprocess.run(["hostname"], capture_output=True, text=True, check=True, timeout=5)
 		hostname = hostname_command.stdout.strip()
 	except subprocess.CalledProcessError as e:
-		hostname = "Error"
+		hostname = style_helper("red", "Error")
 	except subprocess.TimeoutExpired as e:
-		hostname = "Unknown (timeout)"
+		hostname = style_helper("yellow", "Unknown (timeout)")
 
 	# Uptime
 	try:
 		uptime_command = subprocess.run(["uptime", "-p"], capture_output=True, text=True, check=True, timeout=5)
 		uptime = uptime_command.stdout.strip()
 	except subprocess.CalledProcessError as e:
-		uptime = "Error"
+		uptime = style_helper("red", "Error")
 	except subprocess.TimeoutExpired as e:
-		uptime = "Unknown (timeout)"
+		uptime = style_helper("yellow", "Unknown (timeout)")
 	
 	# Modem detection
 	try:
@@ -80,13 +86,13 @@ def index():
 			shell=True,
 			timeout=5
 		)
-		modem_name = modem_command.stdout.strip()
+		modem_name = modem_command.stdout.strip() or style_helper("red", "Error / Not Detected")
 	except subprocess.CalledProcessError as e:
-		modem_name = "Error / Not Detected"
+		modem_name = style_helper("red", "Error / Not Detected")
 	except subprocess.TimeoutExpired as e:
-		modem_name = "Unknown (timeout)"
+		modem_name = style_helper("yellow", "Unknown (timeout)")
 
-	return render_template("index.html", status=status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
+	return render_template("index.html", service_status=service_status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
 
 @app.route("/configure")
 def configure():

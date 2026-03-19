@@ -12,7 +12,7 @@
 							<h6 class="mb-0">DreamPi Service Status</h6>
 						</div>
 						<div class="card-body">
-    						{{ status | safe }}
+    						{{ service_status | safe }}
 						</div>
 					</div>
 				</div>
@@ -22,8 +22,8 @@
 							<h6 class="mb-0">IP Addresses</h6>
 						</div>
 						<div class="card-body small">
-							<strong>DreamPi:</strong> {{ ip_address }}<br>
-							<strong>Dreamcast:</strong> {{ dc_ip_address }}
+							<strong>DreamPi:</strong> {{ ip_address | safe }}<br>
+							<strong>Dreamcast:</strong> {{ dc_ip_address | safe }}
 						</div>
 					</div>
 				</div>
@@ -46,8 +46,8 @@
 						</div>
 						<div class="card-body">
 							<div class="mb-3">
-								<p class="mb-2"><strong>Hostname:</strong> {{ hostname }}</p>
-								<p class="mb-2"><strong>Uptime:</strong> {{ uptime }}</p>
+								<p class="mb-2"><strong>Hostname:</strong> {{ hostname | safe }}</p>
+								<p class="mb-2"><strong>Uptime:</strong> {{ uptime | safe }}</p>
 							</div>
 							<div class="d-flex gap-2">
 								<button class="btn btn-sm btn-warning">Restart Service</button>
@@ -64,10 +64,10 @@
 						<div class="card-body">
 							<div class="mb-3">
 								<ul>
-									<li><strong>Online Users:</strong> <a href="https://dreamcast.online/now/" target="_blank">Dreamcast Now</a></li>
-									<li><strong>Forums:</strong> <a href="https://www.dreamcast-talk.com/" target="_blank">Dreamcast Talk</a></li>
-									<li><strong>Social Media:</strong> <a href="https://www.reddit.com/r/dreamcast/" target="_blank">Reddit r/dreamcast</a></li>
-									<li><strong>Discord:</strong> <a href="https://segaonline.net" target="_blank">Sega Online</a></li>
+									<li><strong>Online Users:</strong> <a href="https://dreamcast.online/now/" target="_blank">Dreamcast Now</a> <i class="bi bi-box-arrow-up-right small"></i></li>
+									<li><strong>Forums:</strong> <a href="https://www.dreamcast-talk.com/" target="_blank">Dreamcast Talk</a> <i class="bi bi-box-arrow-up-right small"></i></li>
+									<li><strong>Social Media:</strong> <a href="https://www.reddit.com/r/dreamcast/" target="_blank">Reddit r/dreamcast</a> <i class="bi bi-box-arrow-up-right small"></i></li>
+									<li><strong>Discord:</strong> <a href="https://segaonline.net" target="_blank">Sega Online</a> <i class="bi bi-box-arrow-up-right small"></i></li>
 								</ul>
 							</div>
 						</div>
