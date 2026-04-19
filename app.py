@@ -1,13 +1,16 @@
 from flask import Flask, render_template, request, redirect, url_for
 import subprocess
+from pathlib import Path
 
 app = Flask(__name__)
+
+BASE_DIR = Path(__file__).resolve().parent
 
 COMMANDS = {
     "restart": ["sudo", "systemctl", "restart", "dreampi.service"],
     "status": ["sudo", "systemctl", "status", "dreampi.service"],
-    "dcnet-on": ["/home/dreampi/dcnet_on_off.sh", "enable", "noreboot"],
-    "dcnet-off": ["/home/dreampi/dcnet_on_off.sh", "disable", "noreboot"],
+    "dcnet-on": [str(BASE_DIR / "scripts" / "dcnet_on_off.sh"), "enable", "noreboot"],
+    "dcnet-off": [str(BASE_DIR / "scripts" / "dcnet_on_off.sh"), "disable", "noreboot"],
 }
 
 # FUNCTION: Status styling helper
