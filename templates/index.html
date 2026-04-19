@@ -13,6 +13,18 @@
 						</div>
 						<div class="card-body">
     						{{ service_status | safe }}
+							<form method="POST" action="/run" id="dcnetForm">
+							  <input type="hidden" name="action" id="dcnetAction" value="dcnet-off">
+							
+							  <div class="form-check form-switch">
+								<input
+								  class="form-check-input"
+								  type="checkbox"
+								  id="checkNativeSwitch"
+								  onchange="document.getElementById('dcnetAction').value = this.checked ? 'dcnet-on' : 'dcnet-off'; this.form.submit();">
+								<label class="form-check-label" for="checkNativeSwitch">DCNET enabled</label>
+							  </div>
+							</form>
 						</div>
 					</div>
 				</div>

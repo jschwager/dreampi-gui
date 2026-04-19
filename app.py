@@ -4,8 +4,10 @@ import subprocess
 app = Flask(__name__)
 
 COMMANDS = {
-	"restart": ["sudo", "systemctl", "restart", "dreampi.service"],
-	"status": ["sudo", "systemctl", "status", "dreampi.service"]
+    "restart": ["sudo", "systemctl", "restart", "dreampi.service"],
+    "status": ["sudo", "systemctl", "status", "dreampi.service"],
+    "dcnet-on": ["/home/dreampi/dcnet_on_off.sh", "enable", "noreboot"],
+    "dcnet-off": ["/home/dreampi/dcnet_on_off.sh", "disable", "noreboot"],
 }
 
 # FUNCTION: Status styling helper
