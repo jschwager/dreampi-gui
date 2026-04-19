@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import subprocess
 from pathlib import Path
 
 app = Flask(__name__)
+app.secret_key = "2fq398j7q34987q34t9"  # Replace with a secure random key in production
 
 BASE_DIR = Path(__file__).resolve().parent
 
