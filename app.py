@@ -109,7 +109,7 @@ def index():
 	except subprocess.TimeoutExpired as e:
 		modem_name = style_helper("yellow", "Unknown (timeout)")
 
-	return render_template("index.html", service_status=service_status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
+	return render_template("index.html", service_status=service_status, dcnet_button_text=dcnet_button_text, dcnet_button_action=dcnet_button_action, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
 
 # ROUTE: Logs
 @app.route("/logs")
