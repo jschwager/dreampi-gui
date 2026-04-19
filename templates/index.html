@@ -13,7 +13,7 @@
 						</div>
 						<div class="card-body">
     						{{ service_status | safe }}
-							<button class="btn btn-sm btn-primary" formaction="{{ dcnet_button_action | safe }}">{{ dcnet_button_text | safe }}</button>
+							<form method="POST" action="/run"> <input type="hidden" name="action" value="{{ dcnet_button_action }}"> <button class="btn btn-sm btn-primary" type="submit">{{ dcnet_button_text }}</button> </form>
 						</div>
 					</div>
 				</div>
