@@ -36,6 +36,17 @@ def index():
 	except subprocess.TimeoutExpired as e:
 		service_status = style_helper("yellow", "Unknown (timeout)")
 	
+	# DCNET button status
+	try:
+		dcnet_status_command = subprocess.run(["grep", "-q", "dcnet", "../dreampi/dreampi.py"], capture_output=True, text=True, check=True, timeout=5)
+		dcnet_button_text = "Disable DCNET"
+		dcnet_button_action = "dcnet-off"
+	except subprocess.CalledProcessError as e:
+		dcnet_button_text = "Enable DCNET"
+		dcnet_button_action = "dcnet-on"
+	except subprocess.TimeoutExpired as e:
+		dcnet_button_text = "DCNET Unknown"
+
 	# IP Address
 
 	# DreamPi IP address
