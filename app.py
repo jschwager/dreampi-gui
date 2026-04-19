@@ -17,6 +17,7 @@ def style_helper(color, status):
 	elif color == "yellow":
 		return f"<i class=\"bi bi-exclamation-circle-fill\" style=\"color: orange;\"></i> {status}"
 
+# ROUTE: Home
 @app.route("/")
 def index():
 
@@ -94,10 +95,7 @@ def index():
 
 	return render_template("index.html", service_status=service_status, ip_address=ip_address, dc_ip_address=dc_ip_address, hostname=hostname, uptime=uptime, modem_name=modem_name)
 
-@app.route("/configure")
-def configure():
-	return render_template("configure.html")
-
+# ROUTE: Logs
 @app.route("/logs")
 def logs():
 	try:
@@ -109,6 +107,7 @@ def logs():
 		logs = "The command timed out."
 	return render_template("logs.html", logs=logs)
 
+# ROUTE: Run command
 @app.route("/run", methods=["POST"])
 def run():
 	action = request.form.get("action", "")
