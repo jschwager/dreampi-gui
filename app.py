@@ -126,19 +126,22 @@ def logs():
 # ROUTE: Run command
 @app.route("/run", methods=["POST"])
 def run():
-	action = request.form.get("action", "")
-	cmd = COMMANDS.get(action)
+    action = request.form.get("action", "")
+    cmd = COMMANDS.get(action)
+    if not cmd:
+        flash("Invalid action.", "danger")
+        return redirect(url_for("index"))
 
-	if not cmd:
-		return redirect(url_for("index"))
+    try:
+        command = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=10)
+        result = (command.stdout or command.stderr or "Command completed with no output.").strip()
+        flash(result, "success")
+    except subprocess.CalledProcessError as e:
+        flash((e.stderr or str(e)).strip(), "danger")
+    except Exception as e:
+        flash(str(e), "danger")
 
-	try:
-		command = subprocess.run(cmd, capture_output=True, text=True, check=True)
-		result = command.stdout or command.stderr
-	except subprocess.CalledProcessError as e:
-		result = e.stderr or str(e)
-
-	return render_template("index.html", result=result)
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
 	from waitress import serve
