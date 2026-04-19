@@ -1,25 +1,41 @@
 #!/bin/bash
+# Script name: DCNET ON/OFF Script for DreamPi
+# Original author: scrivanidc
+# Updated and maintained by: jschwager (onlycodered)
 
-#script by scrivanidc 20250124 #update 20250915
-ACTION=$1
+# Updated 2025-09-15
+ACTION="${1:-}"
+REBOOT=true
 
-if [ "$ACTION" = "enable" ]; then
-  opcao="1"
-elif [ "$ACTION" = "disable" ]; then
-  opcao="2"
-else
-  echo "DCNET Server ON/OFF Script Switch"
+show_help() {
+  echo "Usage: $0 <enable|disable> [noreboot]"
   echo ""
-  echo "Choose option number"
-  echo "1. DCNET Script ON"
-  echo "2. DCNET Script OFF (Standard DreamPi)"
-  echo "3. Delete DCNET Files"
-  read -p "Type 1, 2 or 3 and press Enter: " opcao
+  echo "Examples:"
+  echo "  $0 enable"
+  echo "  $0 disable"
+  echo "  $0 enable noreboot"
+}
+
+case "$ACTION" in
+  enable|disable)
+    ;;
+  *)
+    show_help
+    exit 1
+    ;;
+esac
+
+if [ "${2:-}" = "noreboot" ]; then
+  REBOOT=false
+elif [ -n "${2:-}" ]; then
+  echo "Invalid second argument: $2"
+  show_help
+  exit 1
 fi
 
 cd /home/pi/dreampi/
 echo ""
-verificar_arquivo_a() {
+check_dcnet_files() {
   if [ ! -f "dreampi_dcnet.py" ]; then
     echo "dreampi_dcnet.py backup and dcnet.rpi does not exist. Downloading..."
     echo ">>"
@@ -33,7 +49,7 @@ verificar_arquivo_a() {
   fi
 }
 
-verificar_arquivo_b() {
+check_standard_backup() {
   if [ ! -f "dreampi_standard.py" ]; then
     echo "dreampi_standard.py backup does not exist. Creating..."
     cp dreampi.py dreampi_standard.py
@@ -44,43 +60,35 @@ verificar_arquivo_b() {
   fi
 }
 
-copiar_arquivo_a() {
+copy_dcnet_script() {
   cp dreampi_dcnet.py dreampi.py
   echo "dreampi_dcnet.py copied to dreampi.py"
   echo ">>"
 }
 
-copiar_arquivo_b() {
+copy_standard_script() {
   cp dreampi_standard.py dreampi.py
   echo "dreampi_standard.py copied to dreampi.py"
   echo ">>"
 }
 
-deletar_arquivo_a() {
-  copiar_arquivo_b
-  rm dreampi_dcnet.py dcnet.rpi
-  echo "deleting DCNET files: dreampi_dcnet.py and dcnet.rpi"
-  echo "You're now able to download DCNET updated files at option 1"
-  echo ">>"
-}
+check_standard_backup
+check_dcnet_files
 
-verificar_arquivo_b
-verificar_arquivo_a
-
-if [ "$opcao" -eq 1 ]; then
-  copiar_arquivo_a
+if [ "$ACTION" = "enable" ]; then
+  copy_dcnet_script
   echo "Done. DCNET Script ON (Standard DreamPi Script disabled)"
-elif [ "$opcao" -eq 2 ]; then
-  copiar_arquivo_b
+elif [ "$ACTION" = "disable" ]; then
+  copy_standard_script
   echo "Done. DCNET Script OFF (Standard DreamPi Script enabled)"
-elif [ "$opcao" -eq 3 ]; then
-  deletar_arquivo_a 
-  echo "Done. DCNET files deleted"
-else
-  echo "Invalid option. Please choose 1, 2 or 3."
 fi
 
-echo ">>"
-echo "Restarting RaspberryPi, ready to dial soon"
-sleep 5
-sudo reboot &
+if [ "$REBOOT" = true ]; then
+  echo ">>"
+  echo "Restarting RaspberryPi, ready to dial soon"
+  sleep 5
+  sudo reboot &
+else
+  echo ">>"
+  echo "Reboot skipped (noreboot specified)."
+fi
