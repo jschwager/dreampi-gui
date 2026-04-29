@@ -44,7 +44,7 @@ check_dcnet_files() {
 		chmod +x dreampi_dcnet.py dcnet.rpi
 	else
 		# Need to add logging functionality
-		echo "dreampi_dcnet.py and dcnet.rpi exists. OK."
+		echo "dreampi_dcnet.py and dcnet.rpi exists. OK." > /dev/null
 	fi
 }
 
@@ -56,7 +56,7 @@ check_standard_backup() {
 		cp dreampi.py dreampi_standard2.py
 	else
 		# Need to add logging functionality
-		#echo "dreampi_standard.py backup exists. OK."
+		echo "dreampi_standard.py backup exists. OK." > /dev/null
 	fi
 }
 
@@ -90,5 +90,5 @@ if [ "$REBOOT" = true ]; then
 	sudo reboot &
 else
 	# Need to add logging functionality
-	#echo "Reboot skipped (noreboot specified)."
+	echo "Reboot skipped (noreboot specified)." > /dev/null
 fi
