@@ -44,7 +44,7 @@ check_dcnet_files() {
 		chmod +x dreampi_dcnet.py dcnet.rpi
 	else
 		# Need to add logging functionality
-		#echo "dreampi_dcnet.py and dcnet.rpi exists. OK."
+		echo "dreampi_dcnet.py and dcnet.rpi exists. OK."
 	fi
 }
 
