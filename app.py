@@ -69,7 +69,7 @@ def index():
 			timeout=5,
 			shell=True
 		)
-		dc_ip_address = dc_ip_address_command.stdout.strip() or style_helper("yellow", "No Dreamcast IP found in logs")
+		dc_ip_address = dc_ip_address_command.stdout.strip() or style_helper("yellow", "No IP found in logs")
 	except subprocess.CalledProcessError as e:
 		dc_ip_address = style_helper("red", "Error")
 	except subprocess.TimeoutExpired as e:
