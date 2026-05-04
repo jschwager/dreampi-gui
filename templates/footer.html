@@ -5,5 +5,19 @@
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+	<script>
+		(function () {
+			var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+			var isStandalone = window.navigator.standalone === true;
+			var dismissed = localStorage.getItem('iosInstallBannerDismissed');
+			if (isIos && !isStandalone && !dismissed) {
+				document.getElementById('ios-install-banner').style.display = 'flex';
+			}
+			document.getElementById('ios-banner-close').addEventListener('click', function () {
+				document.getElementById('ios-install-banner').style.display = 'none';
+				localStorage.setItem('iosInstallBannerDismissed', '1');
+			});
+		})();
+	</script>
 </body>
 </html>
