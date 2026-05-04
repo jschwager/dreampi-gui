@@ -1,8 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, send_from_directory
 import subprocess
 from pathlib import Path
 
 app = Flask(__name__)
+
+@app.route('/favicon.ico')
+def favicon():
+	return send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 app.secret_key = "2fq398j7q34987q34t9"  # Replace with a secure random key in production
 
 BASE_DIR = Path(__file__).resolve().parent
