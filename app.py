@@ -104,7 +104,7 @@ def index():
 			shell=True,
 			timeout=5
 		)
-		modem_name = modem_command.stdout.strip() or style_helper("red", "Error / Not Detected")
+		modem_name = style_helper("green", modem_command.stdout.strip()) or style_helper("red", "Error / Not Detected")
 	except subprocess.CalledProcessError as e:
 		modem_name = style_helper("red", "Error / Not Detected")
 	except subprocess.TimeoutExpired as e:
